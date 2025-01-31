@@ -20,6 +20,15 @@ sap.ui.define([
             },
 
             onSave: function () {
+                /*if (!this.pDialog) {
+                    this.pDialog = this.loadFragment({
+                        name: "sap.training.exc.view.Dialog"
+                    });
+                }
+                this.pDialog.then(function (oDialog) {
+                    oDialog.open();
+                });*/
+
                 var oModelData = this.getView().getModel("customer").getData();
                 var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
 
