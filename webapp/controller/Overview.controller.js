@@ -81,6 +81,11 @@ sap.ui.define([
                 oRouter.navTo("detail", {
                     customerId: oItem.getBindingContext().getPath().substring("/UX_Customer".length)
                 });
+            },
+
+            onHover: function (evt) {
+                var sText = this.getOwnerComponent().getModel("i18n").getProperty("msg");
+                MessageToast.show(evt.getSource().getHoverText() + " " + sText, { duration: 1000 });
             }
 
         });

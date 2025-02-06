@@ -1,175 +1,276 @@
-<mvc:View controllerName="sap.training.exc.controller.Overview"
-          xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core"
-          xmlns:mvc="sap.ui.core.mvc"
-          xmlns="sap.m"
-          core:require="{formatter: 'sap/training/exc/model/formatter'}">
-
-     <Page title="{i18n>overviewPageTitle}">
+<mvc:View
+    controllerName="sap.training.exc.controller.Overview"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:cust="sap.training.exc.control"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    core:require="{formatter: 'sap/training/exc/model/formatter'}"
+>
+    <Page title="{i18n>overviewPageTitle}">
         <content>
-            <Panel headerText="{i18n>customerPanelHeader}" expandable="{= !${device>/system/desktop} }" expanded="{device>/system/desktop}" class="sapUiResponsiveMargin sapUiHideOnPhone" width="auto">
-				<content>								
-                    <f:SimpleForm layout="ColumnLayout" editable="true">
+            <Panel
+                headerText="{i18n>customerPanelHeader}"
+                expandable="{= !${device>/system/desktop} }"
+                expanded="{device>/system/desktop}"
+                class="sapUiResponsiveMargin sapUiHideOnPhone"
+                width="auto"
+            >
+                <content>
+                    <f:SimpleForm
+                        layout="ColumnLayout"
+                        editable="true"
+                    >
                         <f:toolbar>
                             <Toolbar>
                                 <content>
-                                    <ToolbarSpacer/>
-                                    <Button icon="sap-icon://create" text="{i18n>newCustomerButtonText}" press=".onSave"
-                                            enabled="{=  ${customer>/CustomerName} !== undefined &amp;&amp; ${customer>/CustomerName}.length > 0 }"/>
+                                    <ToolbarSpacer />
+                                    <Button
+                                        icon="sap-icon://create"
+                                        text="{i18n>newCustomerButtonText}"
+                                        press=".onSave"
+                                        enabled="{=  ${customer>/CustomerName} !== undefined &amp;&amp; ${customer>/CustomerName}.length > 0 }"
+                                    />
                                 </content>
                             </Toolbar>
                         </f:toolbar>
                         <f:content>
-                            <core:Title text="{i18n>generalDataFormContainerTitle}"/>
-                                <Label text="{i18n>formLabelText}"/>
-                                <Input value="{customer>/Form}"/>
+                            <core:Title
+                                text="{i18n>generalDataFormContainerTitle}"
+                            />
+                            <Label text="{i18n>formLabelText}" />
+                            <Input value="{customer>/Form}" />
 
-                                <Label text="{i18n>nameLabelText}"/>
-                                <Input value="{customer>/CustomerName}" valueLiveUpdate="true"/>
-                               
-                                <Label text="{i18n>discountLabelText}"/>
-                                <Input value="{ path: 'customer>/Discount',
+                            <Label text="{i18n>nameLabelText}" />
+                            <Input
+                                value="{customer>/CustomerName}"
+                                valueLiveUpdate="true"
+                            />
+
+                            <Label text="{i18n>discountLabelText}" />
+                            <Input
+                                value="{ path: 'customer>/Discount',
                                                 type: 'sap.ui.model.type.Integer',
-                                                constraints: {minimum: 0, maximum: 100} }"/>
+                                                constraints: {minimum: 0, maximum: 100} }"
+                            />
 
-                            <core:Title text="{i18n>addressDataFormContainerTitle}"/>
-                                <Label text="{i18n>streetLabelText}"/>
-                                <Input value="{customer>/Street}"/>
+                            <core:Title
+                                text="{i18n>addressDataFormContainerTitle}"
+                            />
+                            <Label text="{i18n>streetLabelText}" />
+                            <Input value="{customer>/Street}" />
 
-                                <Label text="{i18n>postcodeLabelText}"/>
-                                <Input value="{customer>/PostCode}"/>
+                            <Label text="{i18n>postcodeLabelText}" />
+                            <Input value="{customer>/PostCode}" />
 
-                                <Label text="{i18n>cityLabelText}"/>
-                                <Input value="{customer>/City}"/>
+                            <Label text="{i18n>cityLabelText}" />
+                            <Input value="{customer>/City}" />
 
-                                <Label text="{i18n>countryLabelText}"/>
-                                <Input value="{customer>/Country}"/>                  
+                            <Label text="{i18n>countryLabelText}" />
+                            <Input value="{customer>/Country}" />
 
-                            <core:Title text="{i18n>contactDataFormContainerTitle}"/>
-                                <Label text="{i18n>emailLabelText}"/>                    
-                                <Input value="{customer>/Email}"/>
+                            <core:Title
+                                text="{i18n>contactDataFormContainerTitle}"
+                            />
+                            <Label text="{i18n>emailLabelText}" />
+                            <Input value="{customer>/Email}" />
 
-                                <Label text="{i18n>phoneLabelText}"/>
-                                <Input value="{customer>/Telephone}"/>                     
+                            <Label text="{i18n>phoneLabelText}" />
+                            <Input value="{customer>/Telephone}" />
                         </f:content>
                     </f:SimpleForm>
                 </content>
             </Panel>
 
-            <Table id="customerTable" growing="true" growingThreshold="5" class="sapUiResponsiveMargin" width="auto"
-                   mode="SingleSelectLeft" selectionChange=".onCustomerChange"
-                   items="{ path: '/UX_Customer',
-                            sorter: [ {path: 'City', group: true}, {path: 'CustomerName'} ] }">
+            <Table
+                id="customerTable"
+                growing="true"
+                growingThreshold="5"
+                class="sapUiResponsiveMargin"
+                width="auto"
+                mode="SingleSelectLeft"
+                selectionChange=".onCustomerChange"
+                items="{path: '/UX_Customer',
+                        sorter: [ {path: 'City', group: true}, {path: 'CustomerName'} ] }"
+            >
                 <headerToolbar>
                     <Toolbar>
-                        <Title text="{i18n>customerTableHeader}"/>
-                        <ToolbarSpacer/>
-                        <SearchField width="40%" search=".onFilterCustomers"/>
+                        <Title text="{i18n>customerTableHeader}" />
+                        <ToolbarSpacer />
+                        <SearchField
+                            width="40%"
+                            search=".onFilterCustomers"
+                        />
                     </Toolbar>
-                </headerToolbar>          
+                </headerToolbar>
                 <columns>
-                     <Column>
+                    <Column>
                         <header>
-                            <Text text="{i18n>nameLabelText}"/>
-                        </header>                        
+                            <Text text="{i18n>nameLabelText}" />
+                        </header>
                     </Column>
                     <Column minScreenWidth="Desktop">
                         <header>
-                            <Text text="{i18n>streetLabelText}"/>
-                        </header>                        
+                            <Text text="{i18n>streetLabelText}" />
+                        </header>
                     </Column>
                     <Column minScreenWidth="Desktop">
                         <header>
-                            <Text text="{i18n>postcodeLabelText}"/>
-                        </header>                        
+                            <Text text="{i18n>postcodeLabelText}" />
+                        </header>
                     </Column>
                     <Column>
                         <header>
-                            <Text text="{i18n>cityLabelText}"/>
-                        </header>                        
+                            <Text text="{i18n>cityLabelText}" />
+                        </header>
                     </Column>
                     <Column minScreenWidth="Tablet">
                         <header>
-                            <Text text="{i18n>countryLabelText}"/>
-                        </header>                        
+                            <Text text="{i18n>countryLabelText}" />
+                        </header>
                     </Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true">
+                    <Column
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                    >
                         <header>
-                            <Text text="{i18n>emailLabelText}"/>
-                        </header>                        
+                            <Text text="{i18n>emailLabelText}" />
+                        </header>
+                    </Column>
+                    <Column
+                        id="flbooking"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="Center"
+                    >
+                        <header>
+                            <Text
+                                id="flbookingtext"
+                                text="{i18n>hoveraction}"
+                            />
+                        </header>
+                    </Column>
+                    <Column
+                        id="customerinfo"
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                        hAlign="Center"
+                    >
+                        <Text
+                            id="custinfotext"
+                            text="{i18n>customerInfo}"
+                        />
                     </Column>
                 </columns>
                 <items>
-                    <ColumnListItem type="Navigation" press="onNavToDetails">
+                    <ColumnListItem
+                        type="Navigation"
+                        press="onNavToDetails"
+                    >
                         <cells>
-                            <ObjectIdentifier title="{CustomerName}"/>
-                            <Text text="{Street}"/>
-                            <Text text="{PostCode}"/>
-                            <Text text="{City}"/>
-                            <Text text="{Country}"/>
-                            <Text text="{Email}"/>
+                            <ObjectIdentifier title="{CustomerName}" />
+                            <Text text="{Street}" />
+                            <Text text="{PostCode}" />
+                            <Text text="{City}" />
+                            <Text text="{Country}" />
+                            <Text text="{Email}" />
+                            <cust:HoverButton
+                                id="hoverButton1"
+                                text="{i18n>hoveraction}"
+                                allowHover="true"
+                                hoverText="{= ${Discount} > 0 ? ${Discount} : 'No' }"
+                                hover="onHover"
+                            />
+                            <cust:CustomerInfo
+                                id="custInfo1"
+                                email="{Email}"
+                                phone="{Telephone}"
+                            />
                         </cells>
                     </ColumnListItem>
                 </items>
             </Table>
 
-            <Table id="bookingTable" headerText="{i18n>bookingTableHeader}" items="{_Bookings}" growing="true" growingThreshold="5" class="sapUiResponsiveMargin" width="auto">
+            <Table
+                id="bookingTable"
+                headerText="{i18n>bookingTableHeader}"
+                items="{_Bookings}"
+                growing="true"
+                growingThreshold="5"
+                class="sapUiResponsiveMargin"
+                width="auto"
+            >
                 <columns>
                     <Column>
                         <header>
-                            <Text text="{i18n>airlineColumnHeader}"/>
-                        </header>                        
+                            <Text text="{i18n>airlineColumnHeader}" />
+                        </header>
                     </Column>
                     <Column>
                         <header>
-                            <Text text="{i18n>connectionColumnHeader}"/>
-                        </header>                        
+                            <Text text="{i18n>connectionColumnHeader}" />
+                        </header>
                     </Column>
                     <Column>
                         <header>
-                            <Text text="{i18n>fldateColumnHeader}"/>
-                        </header>                        
+                            <Text text="{i18n>fldateColumnHeader}" />
+                        </header>
                     </Column>
-                    <Column minScreenWidth="Desktop" demandPopin="true">
+                    <Column
+                        minScreenWidth="Desktop"
+                        demandPopin="true"
+                    >
                         <header>
-                            <Text text="{i18n>classColumnHeader}"/>
-                        </header>                        
+                            <Text text="{i18n>classColumnHeader}" />
+                        </header>
                     </Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true">
+                    <Column
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                    >
                         <header>
-                            <Text text="{i18n>paymentColumnHeader}"/>
-                        </header>                        
+                            <Text text="{i18n>paymentColumnHeader}" />
+                        </header>
                     </Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true">
+                    <Column
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                    >
                         <header>
-                            <Text text="{i18n>cancellationColumnHeader}"/>
-                        </header>                        
+                            <Text text="{i18n>cancellationColumnHeader}" />
+                        </header>
                     </Column>
                 </columns>
                 <items>
                     <ColumnListItem>
                         <cells>
-                            <ObjectIdentifier title="{AirlineID}"/>
-                            <ObjectIdentifier title="{ConnectionNumber}"/> 
-                            <ObjectIdentifier title="{ path: 'FlightDate',
+                            <ObjectIdentifier title="{AirlineID}" />
+                            <ObjectIdentifier title="{ConnectionNumber}" />
+                            <ObjectIdentifier
+                                title="{ path: 'FlightDate',
                                                        type: 'sap.ui.model.type.Date',
-                                                       formatOptions: {source: {pattern: 'yyyy-MM-dd'}, style: 'medium'} }"/>
-                            <Text text="{ path: 'Class', 
-                                          formatter: 'formatter.classText' }"/>
+                                                       formatOptions: {source: {pattern: 'yyyy-MM-dd'}, style: 'medium'} }"
+                            />
+                            <Text
+                                text="{ path: 'Class', 
+                                          formatter: 'formatter.classText' }"
+                            />
                             <ObjectNumber
-                                    number="{
+                                number="{
                                         parts: [ {path: 'ForeignCurrencyPayment'}, {path: 'ForeignCurrency'} ],
                                         type: 'sap.ui.model.type.Currency',
                                         formatOptions: {showMeasure: false}
                                     }"
-                                    unit="{ForeignCurrency}"/>
-                            <core:Icon src="{= ${IsCancelled} === 'X' ? 'sap-icon://cancel' : 'sap-icon://accept' }"
-                                       tooltip="{= ${IsCancelled} === 'X' ? ${i18n>cancelledTooltip} : ${i18n>notCancelledTooltip} }"/>
+                                unit="{ForeignCurrency}"
+                            />
+                            <core:Icon
+                                src="{= ${IsCancelled} === 'X' ? 'sap-icon://cancel' : 'sap-icon://accept' }"
+                                tooltip="{= ${IsCancelled} === 'X' ? ${i18n>cancelledTooltip} : ${i18n>notCancelledTooltip} }"
+                            />
                         </cells>
                     </ColumnListItem>
                 </items>
             </Table>
-
         </content>
     </Page>
-   
 </mvc:View>
